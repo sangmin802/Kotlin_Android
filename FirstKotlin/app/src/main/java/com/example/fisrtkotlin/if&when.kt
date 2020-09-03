@@ -21,18 +21,17 @@ fun maxBy(a : Int, b : Int) : String {
 fun maxBy2(a : Int, b : Int) : Int = if(a > b) a else b
 
 //when
-// while과 비슷하다
+// switch와 비슷하다
 fun checkNum(score : Int){
     // 방법1
     when(score){
         0 -> println("this is ${score}")
         1 -> println("this is ${score}")
         2,3 -> println("this is 2 or 3")
-        else -> println("I don't know")
     }
 
     // 방법2
-    // 변수에 return을 담는 방법은, else를 꼭 포함시켜야 한다.
+    // 변수에 특정 타입의 return을 담는다면, else를 꼭 포함시켜야 한다.
     var b : Int = when(score){
         1 -> 1
         2 -> 2
