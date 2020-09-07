@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    >
+    <fragment
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--
+    4개의 레이아웃을 가지고 있고, navigation을 통해 화면이동을 할 것이다.
+    단! activity를 4개만드는것이 아닌 fragment를 4개만들고 navigation으로 페이지 이동을 할 것
+        * activity는 fragment를 담는 틀
+        * main activity 하나에서 여러개의 fragment.
+            -> 마치 이전에 프레임워크에서 하나의 app.js안에 여러개의 컴포넌트를 가져오는것과 같음
+    android공식사이트에서
+    https://developer.android.com/guide/navigation/navigation-getting-started?hl=ko 확인
+    두번째 build.gradle 의존파일에 코틀린내용을 적고, 위처럼 fragment를 가져온다.
+        * fragment는 프론트단에서 예시를 들면 컴포넌트인것같다. 생각해보니 React.Fragemnt는 공백의 컴포넌트였던거같은데
+-->
