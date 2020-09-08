@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     tools:context=".fragment.MainFragment">
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
