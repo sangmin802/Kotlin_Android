@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 //        Fragment를 관리하기 위해서는 supportFragmentManager를 사용해야한다.
 //        supportFragmentManager.beginTransaction()를 통해, 첫번째 인자의 아이디를 가지고있는FrameLayout
 //        을 두번째 인자의 Fragment로 변경할 수 있다.
-//        Log.i("콘솔", "${v}")
+//        Log.i("콘솔", "${v?.id}")
         when(v?.id){
             R.id.btn1 -> {
                 supportFragmentManager.beginTransaction().replace(R.id.view, FirstFragment()).commit()
