@@ -8,6 +8,10 @@ import com.example.changingfragments.fragment.FirstFragment
 import com.example.changingfragments.fragment.SecondFragment
 import com.example.changingfragments.fragment.ThirdFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import org.json.JSONObject
+import org.jsoup.Jsoup
+import java.net.URL
+import java.net.URLEncoder
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
