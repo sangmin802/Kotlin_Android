@@ -1,24 +1,29 @@
-package com.example.changingfragments
+package com.example.httprequestlostark
 
-import org.json.JSONObject
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
 import org.jsoup.Jsoup
-import java.net.URL
 import java.net.URLEncoder
 
-fun main(){
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
 //    HTTP Reauest
+//    HTML parser인 Jsoup을 받아야함
 //    안드로이드는 진짜 완전 쌩 영어만 되나봄
 //    따라서 한글로된 query는 아래의 방법으로 인코딩해줘야함
 //    https://cors-anywhere.herokuapp.com
 //    println((URL("https://lostark.game.onstove.com/Profile/Character/${URLEncoder.encode("모여요꿈동산", "UTF-8")}").readText()))
-    val scripts = (Jsoup.connect("https://m-lostark.game.onstove.com/Profile/Character/${URLEncoder.encode("워로드는뒤로점프", "UTF-8")}").get()).body().select("script")
-    for((index, element : org.jsoup.nodes.Element) in scripts.withIndex()) {
-        if(index===0){
-            val target = element.childNode(0).toString().replace("\$.Profile = {", "{").replace("};", "}").trim()
+        val scripts = (Jsoup.connect("https://m-lostark.game.onstove.com/Profile/Character/${URLEncoder.encode("워로드는뒤로점프", "UTF-8")}").get()).body().select("script")
+        for((index, element : org.jsoup.nodes.Element) in scripts.withIndex()) {
+            if(index===0){
+                val target = element.childNode(0).toString().replace("\$.Profile = {", "{").replace("};", "}").trim()
 //            println(target)
-        }
+            }
 
-    }
+        }
 
 
 //    MainActivity 처럼 실제 구동 파일에서만 작동!
@@ -39,4 +44,5 @@ fun main(){
 
 //          Jsoup을 통해 문자열 내에 있는 태그들을 지울 수 있다.
 //        Log.i("결과값", "${Jsoup.parse(JSONObject(loa).getJSONObject("Equip").getJSONObject("Ee4170f6_000").getJSONObject("Element_000").get("value").toString()).text()}")
+    }
 }
