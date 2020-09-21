@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         loadData()
     }
 
-
+//  ctrl+o를 통해 override가 가능한 메소드들을 볼 수 있다.
     //    앱이 종료되는 시점에 호출
     override fun onDestroy() {
         super.onDestroy()
