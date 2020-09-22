@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.changingfragments.R
+import kotlinx.android.synthetic.main.fragment_search.*
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -44,8 +45,18 @@ class SecondFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var count = 1
+
 //        Fragment 안의 Fragment는 childFragmentManager로 한다
         childFragmentManager.beginTransaction().replace(R.id.searchArea, SearchFragment()).commit()
+        childFragmentManager.beginTransaction().replace(
+            R.id.resultArea,
+            ResultFragment().apply {
+                arguments = Bundle().apply {
+                    putInt("counter", count)
+                }
+            }
+        ).commit()
     }
 
     companion object {
