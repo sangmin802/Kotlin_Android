@@ -2,6 +2,7 @@ package com.example.loahands.fragments
 
 import android.os.Bundle
 import android.os.Handler
+import android.sax.Element
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,18 +10,15 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.loahands.R
 import kotlinx.android.synthetic.main.fragment_search.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.jsoup.Jsoup
 import java.net.URLEncoder
 import org.json.JSONObject
+import java.security.Key
 import java.util.*
 import kotlin.concurrent.schedule
 
 class SearchFragment : Fragment() {
-    val scope = CoroutineScope(Dispatchers.Main)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -39,29 +37,41 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         btn_search.setOnClickListener {
             val editTextVal = URLEncoder.encode("${et_value.text}", "UTF-8")
-            scope.launch(Dispatchers.Default) {
-                val getHttp = (Jsoup.connect("https://lostark.game.onstove.com/Profile/Character/${editTextVal}").get()).body()
-                val scripts = getHttp.select("script")
-
-//                다 가져오질 못하고있음. 비동기인 코루틴 학습 필요
-                Timer().schedule(3000) {
-                    Log.i("3초뒤 아이템", "${scripts[0]}")
-                }
-                Log.i("바로 아이템", "${scripts[0]}")
-
-
-//                for((index, element : org.jsoup.nodes.Element) in scripts.withIndex()) {
-//                    if(index===0){
-//
-//                        val target = element.toString().replace("\$.Profile = {", "{").replace("};", "}").trim()
-//                        val userInfoJson = JSONObject(target)
-//                        Log.i("아이템제이슨", "${userInfoJson}")
+            GlobalScope.launch {
+//                콜백방식으로 해봄
+//                getHttpRequest(editTextVal) {
+//                    val scripts = it.select("script")
+//                    val userInfo = scripts[0].toString().replace("<script type=\"text/javascript\">", "").replace("</script>", "").replace("\$.Profile = {", "{").replace("};", "}").trim()
+//                    val userInfoKeys = JSONObject(userInfo).getJSONObject("Skill").keys().iterator()
+//                    for(key in userInfoKeys){
+//                        Log.i("아이템", "${JSONObject(userInfo).getJSONObject("Skill").getJSONObject(key)}")
 //                    }
 //                }
+
+
+//                다 가져오질 못하고있음. 비동기인 코루틴 학습 필요
+                val getHttp = async {
+                    (Jsoup.connect("https://lostark.game.onstove.com/Profile/Character/${editTextVal}").get()).body()
+                }.await()
+                val scripts = getHttp.select("script")
+                val userInfo = scripts[0].toString().replace("<script type=\"text/javascript\">", "").replace("</script>", "").replace("\$.Profile = {", "{").replace("};", "}").trim()
+//                로그캣에 전부 노출되진않는데, 갯수는 맞는거보니 그냥 너무길어서 자르나봄
+//                Log.i("바로 아이템", "${JSONObject(userInfo).getJSONObject("Skill").length()}")
+//                Log.i("바로 아이템", "${JSONObject(userInfo).getJSONObject("Skill").keys()}")
+                val userInfoKeys = JSONObject(userInfo).getJSONObject("Skill").keys().iterator()
+//                현재 보니깐, key값이 랜덤으로 계속바뀌어서 키값을 추출하고 순회토록 함
+                for(key in userInfoKeys){
+                    Log.i("아이템", "${JSONObject(userInfo).getJSONObject("Skill").getJSONObject(key)}")
+                }
             }
         }
     }
 
+//    콜백방식용
+//    fun getHttpRequest(_editTextVal : String, callback : ((org.jsoup.nodes.Element) -> Unit)){
+//        val getHttp = (Jsoup.connect("https://lostark.game.onstove.com/Profile/Character/${_editTextVal}").get()).body()
+//        callback(getHttp)
+//    }
     companion object {
         fun newInstance() =
             SearchFragment().apply {
