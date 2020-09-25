@@ -100,6 +100,21 @@ import kotlinx.coroutines.*
 //}
 
 //fun main() = runBlocking {
+////    예제 5-1
+////      laucn뒤에 join()메소드로 대기하게하여 순차적으로 프로그래밍을 할 수 있다.
+//    var text = "banana"
+//    launch {
+//        delay(2000)
+//        text = "Chicken"
+//    }.join()
+//    launch {
+//        delay(1500)
+//        text+="is delicious"
+//    }.join()
+//    println(text)
+//}
+
+//fun main() = runBlocking {
 ////    예제6
 ////      만약 내부의 코드를 별도의 함수로 빼고자 할 때, 앞에 suspend를 붙여서 해당 코루틴 내부에서 기다리도록 할 수 있다.
 //    launch {
