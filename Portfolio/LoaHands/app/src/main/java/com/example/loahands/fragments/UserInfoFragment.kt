@@ -38,6 +38,11 @@ class UserInfoFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_user_info, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        childFragmentManager.beginTransaction().replace(R.id.frame_search, SearchFragment.newInstance()).commit()
+    }
+
     companion object {
         /**
          * Use this factory method to create a new instance of
