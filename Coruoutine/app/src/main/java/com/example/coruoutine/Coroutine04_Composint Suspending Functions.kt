@@ -2,7 +2,6 @@ package com.example.coruoutine
 
 import kotlinx.coroutines.*
 import java.lang.ArithmeticException
-import kotlin.system.measureTimeMillis
 
 //fun main() = runBlocking {
 ////    예제1
@@ -103,29 +102,29 @@ import kotlin.system.measureTimeMillis
 //    return 29
 //}
 
-fun main() = runBlocking<Unit> {
-//    예제5
-//      two에서 exception이 발생하게되어 일정시간뒤 실행되는 one또한 종료됨
-//      그리고 최종 catch에서도 catch로 exception이 발생되었다 나옴
-    try {
-        failedConcurrentSum()
-    } catch (e : ArithmeticException) {
-        println("Computation failed with ArithmetickException")
-    }
-}
-
-suspend fun failedConcurrentSum() : Int = coroutineScope {
-    val one = async {
-        try {
-            delay(Long.MAX_VALUE)
-            42
-        } finally {
-            println("First child was cancelled")
-        }
-    }
-    val two = async<Int> {
-        println("Second child throws an exception")
-        throw ArithmeticException()
-    }
-    one.await() + two.await()
-}
+//fun main() = runBlocking<Unit> {
+////    예제5
+////      two에서 exception이 발생하게되어 일정시간뒤 실행되는 one또한 종료됨
+////      그리고 최종 catch에서도 catch로 exception이 발생되었다 나옴
+//    try {
+//        failedConcurrentSum()
+//    } catch (e : ArithmeticException) {
+//        println("Computation failed with ArithmetickException")
+//    }
+//}
+//
+//suspend fun failedConcurrentSum() : Int = coroutineScope {
+//    val one = async {
+//        try {
+//            delay(Long.MAX_VALUE)
+//            42
+//        } finally {
+//            println("First child was cancelled")
+//        }
+//    }
+//    val two = async<Int> {
+//        println("Second child throws an exception")
+//        throw ArithmeticException()
+//    }
+//    one.await() + two.await()
+//}
