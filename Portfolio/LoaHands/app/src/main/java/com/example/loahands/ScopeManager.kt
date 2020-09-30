@@ -11,9 +11,9 @@ class ScopeManager {
     fun destroy(){
         mainScope.cancel()
     }
-    fun HttpRequest(_val : String) {
+    suspend fun HttpRequest(_val : String) : JSONObject {
         var userEquipArr = arrayListOf<Any>()
-        mainScope.launch {
+        return mainScope.async {
             val httpResult = getHttp(_val)
             val scripts = httpResult.select("script")
             val userInfo = scripts[0].toString().replace("<script type=\"text/javascript\">", "").replace("</script>", "").replace("\$.Profile = {", "{").replace("};", "}").trim()
@@ -22,8 +22,8 @@ class ScopeManager {
             for(key in userEquipKeys){
                 userEquipArr.add(userEquip[key])
             }
-            Log.i("결과값", "${JSONObject(userEquipArr[19].toString()).getJSONObject("Element_006")}")
-        }
+            userEquip
+        }.await()
     }
 
     suspend fun getHttp(_val : String) : Element = runBlocking {
