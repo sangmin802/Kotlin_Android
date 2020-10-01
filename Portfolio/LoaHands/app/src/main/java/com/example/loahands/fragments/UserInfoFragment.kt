@@ -1,21 +1,25 @@
 package com.example.loahands.fragments
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.loahands.R
+import com.example.loahands.ScopeManager
+import com.example.loahands.model.SendingData
+import kotlinx.coroutines.*
 import org.json.JSONObject
 
 class UserInfoFragment : Fragment() {
-    private var userData : String? = ""
+    var userData : SendingData? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            userData = it.getString("userData")
+            userData = it.getParcelable("userData")
         }
     }
 
@@ -30,15 +34,16 @@ class UserInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.i("유저정보", "${JSONObject(userData)}")
+        Log.i("결과값", "${userData?.userEquip?.stone}")
+        Log.i("결과값", "${userData?.userInfo?.userName}")
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(userData : String) =
+        fun newInstance(userData : SendingData) =
             UserInfoFragment().apply {
                 arguments = Bundle().apply {
-                    putString("userData", userData)
+                    putParcelable("userData", userData)
                 }
             }
     }

@@ -5,46 +5,121 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.UserInfoFragment">
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.2"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_head"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="50dp"
-                android:text="@string/hello_blank_fragment"/>
-            <TextView
+                app:srcCompat="@drawable/bg_equipment_lock"
+                android:layout_marginTop="10dp"/>
+
+            <ImageView
+                android:id="@+id/iv_shoulder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="50dp"
-                android:text="@string/hello_blank_fragment"/>
-            <TextView
+                app:srcCompat="@drawable/bg_equipment_lock"
+                android:layout_marginTop="10dp"/>
+
+            <ImageView
+                android:id="@+id/iv_cloth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="50dp"
-                android:text="@string/hello_blank_fragment"/>
-            <TextView
+                app:srcCompat="@drawable/bg_equipment_lock"
+                android:layout_marginTop="10dp"/>
+
+            <ImageView
+                android:id="@+id/iv_pants"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="50dp"
-                android:text="@string/hello_blank_fragment"/>
-            <TextView
+                app:srcCompat="@drawable/bg_equipment_lock"
+                android:layout_marginTop="10dp"/>
+
+            <ImageView
+                android:id="@+id/iv_glove"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="50dp"
-                android:text="@string/hello_blank_fragment"/>
-            <TextView
+                app:srcCompat="@drawable/bg_equipment_lock"
+                android:layout_marginTop="10dp"/>
+
+            <ImageView
+                android:id="@+id/iv_weapon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="50dp"
-                android:text="@string/hello_blank_fragment"/>
+                app:srcCompat="@drawable/bg_equipment_lock"
+                android:layout_marginTop="10dp"/>
         </LinearLayout>
-    </ScrollView>
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.2"
+            android:gravity="center">
 
+            <ImageView
+                android:id="@+id/iv_necklace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/bg_equipment_lock"
+                android:layout_marginTop="10dp"/>
 
+            <ImageView
+                android:id="@+id/iv_earing1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/bg_equipment_lock"
+                android:layout_marginTop="10dp"/>
+
+            <ImageView
+                android:id="@+id/iv_earing2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/bg_equipment_lock"
+                android:layout_marginTop="10dp"/>
+
+            <ImageView
+                android:id="@+id/iv_ring1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/bg_equipment_lock"
+                android:layout_marginTop="10dp"/>
+
+            <ImageView
+                android:id="@+id/iv_ring2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/bg_equipment_lock"
+                android:layout_marginTop="10dp"/>
+
+            <ImageView
+                android:id="@+id/iv_stone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/bg_equipment_lock"
+                android:layout_marginTop="10dp"/>
+
+            <ImageView
+                android:id="@+id/iv_blank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/bg_equipment_lock"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
