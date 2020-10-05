@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 class SendingData (
-  var userEquip : UserEquip,
+  var userEquip : UserEquip?,
   var userInfo : UserInfo
 ) : Parcelable {
     constructor(parcel: Parcel) : this(

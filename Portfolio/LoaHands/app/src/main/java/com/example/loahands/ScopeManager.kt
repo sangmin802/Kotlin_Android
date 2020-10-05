@@ -37,29 +37,34 @@ class ScopeManager {
         result
     }
 
-    fun getUserEquip(httpResult : Element) : UserEquip {
+    fun getUserEquip(httpResult : Element) : UserEquip? {
         val scripts = httpResult.select("script")
         var userEquipClass = UserEquip()
-        val userInfo = scripts[0].toString().replace("<script type=\"text/javascript\">", "").replace("</script>", "").replace("\$.Profile = {", "{").replace("};", "}").trim()
-        val userEquip = JSONObject(userInfo).getJSONObject("Equip")
-        val userEquipKeys = JSONObject(userInfo).getJSONObject("Equip").keys().iterator()
-        for(key in userEquipKeys){
-            when(key.takeLast(3)) {
-                "000" -> {userEquipClass.weapon = UserEquipDetail(userEquip[key])}
-                "001" -> {userEquipClass.head = UserEquipDetail(userEquip[key])}
-                "002" -> {userEquipClass.cloth = UserEquipDetail(userEquip[key])}
-                "003" -> {userEquipClass.pants = UserEquipDetail(userEquip[key])}
-                "004" -> {userEquipClass.glove = UserEquipDetail(userEquip[key])}
-                "005" -> {userEquipClass.shoulder = UserEquipDetail(userEquip[key])}
-                "006" -> {userEquipClass.necklace = UserEquipDetail(userEquip[key])}
-                "007" -> {userEquipClass.earing1 = UserEquipDetail(userEquip[key])}
-                "008" -> {userEquipClass.earing2 = UserEquipDetail(userEquip[key])}
-                "009" -> {userEquipClass.ring1 = UserEquipDetail(userEquip[key])}
-                "010" -> {userEquipClass.ring2 = UserEquipDetail(userEquip[key])}
-                "011" -> {userEquipClass.stone = UserEquipDetail(userEquip[key])}
+        val removeScriptTag = scripts[0].toString().replace("<script type=\"text/javascript\">", "").replace("</script>", "").trim()
+        if(removeScriptTag.length!==0){
+            val userInfo = removeScriptTag.replace("\$.Profile = {", "{").replace("};", "}").trim()
+            val userEquip = JSONObject(userInfo).getJSONObject("Equip")
+            val userEquipKeys = JSONObject(userInfo).getJSONObject("Equip").keys().iterator()
+            for(key in userEquipKeys){
+                when(key.takeLast(3)) {
+                    "000" -> {userEquipClass.weapon = UserEquipDetail(userEquip[key], "weapon")}
+                    "001" -> {userEquipClass.head = UserEquipDetail(userEquip[key], "head")}
+                    "002" -> {userEquipClass.cloth = UserEquipDetail(userEquip[key], "cloth")}
+                    "003" -> {userEquipClass.pants = UserEquipDetail(userEquip[key], "pants")}
+                    "004" -> {userEquipClass.glove = UserEquipDetail(userEquip[key], "glove")}
+                    "005" -> {userEquipClass.shoulder = UserEquipDetail(userEquip[key], "shoulder")}
+                    "006" -> {userEquipClass.necklace = UserEquipDetail(userEquip[key], "necklace")}
+                    "007" -> {userEquipClass.earing1 = UserEquipDetail(userEquip[key], "earing1")}
+                    "008" -> {userEquipClass.earing2 = UserEquipDetail(userEquip[key], "earing2")}
+                    "009" -> {userEquipClass.ring1 = UserEquipDetail(userEquip[key], "ring1")}
+                    "010" -> {userEquipClass.ring2 = UserEquipDetail(userEquip[key], "ring2")}
+                    "011" -> {userEquipClass.stone = UserEquipDetail(userEquip[key], "stone")}
+                }
             }
+            return userEquipClass
+        }else{
+            return null
         }
-        return userEquipClass
     }
     fun getUserInfo(httpResult: Element, _val : String) : UserInfo {
         val userName = _val
@@ -75,12 +80,5 @@ class ScopeManager {
             this.reachItemLv = reachItemLv
         }
         return userInfoClass
-    }
-
-    suspend fun changeToJSON(_string1 : String, _string2 : String) : ArrayList<Any> {
-        return mainScope.async {
-            var array = arrayListOf<Any>(JSONObject(_string1), JSONObject(_string2))
-            array
-        }.await()
     }
 }

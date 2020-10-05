@@ -1,5 +1,8 @@
 package com.example.loahands.fragments
 
+import android.graphics.Color
+import android.graphics.LinearGradient
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
@@ -7,11 +10,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.loahands.R
 import com.example.loahands.ScopeManager
+import com.example.loahands.adapters.EquipImgAdapter
 import com.example.loahands.model.SendingData
+import com.example.loahands.model.UserEquip
 import com.example.loahands.model.UserEquipDetail
 import kotlinx.android.synthetic.main.fragment_user_info.*
 import kotlinx.coroutines.*
@@ -39,6 +46,11 @@ class UserInfoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val imgBaseUrl = "http://cdn-lostark.game.onstove.com/"
         val _userEquip = userData?.userEquip
+
+        setItemImg(imgBaseUrl, _userEquip)
+    }
+
+    fun setItemImg(imgBaseUrl : String, _userEquip : UserEquip?){
         val head = _userEquip?.head
         val shoulder = _userEquip?.shoulder
         val cloth = _userEquip?.cloth
@@ -51,20 +63,16 @@ class UserInfoFragment : Fragment() {
         val ring1 = _userEquip?.ring1
         val ring2 = _userEquip?.ring2
         var stone = _userEquip?.stone
+        var blank = _userEquip?.blank
+        val leftList = arrayListOf(head, shoulder, cloth, pants, glove, weapon)
+        val rightList = arrayListOf(necklace, earing1, earing2, ring1, ring2, stone, blank)
 
+//        div_userEquipWrap.setBackgroundResource(resources.getIdentifier("bg_profile_equipment", "drawable", activity?.packageName))
 
-        Glide.with(this).load("${imgBaseUrl+head?.itemImg}").into(iv_head)
-        Glide.with(this).load("${imgBaseUrl+shoulder?.itemImg}").into(iv_shoulder)
-        Glide.with(this).load("${imgBaseUrl+cloth?.itemImg}").into(iv_cloth)
-        Glide.with(this).load("${imgBaseUrl+pants?.itemImg}").into(iv_pants)
-        Glide.with(this).load("${imgBaseUrl+glove?.itemImg}").into(iv_glove)
-        Glide.with(this).load("${imgBaseUrl+weapon?.itemImg}").into(iv_weapon)
-        Glide.with(this).load("${imgBaseUrl+necklace?.itemImg}").into(iv_necklace)
-        Glide.with(this).load("${imgBaseUrl+earing1?.itemImg}").into(iv_earing1)
-        Glide.with(this).load("${imgBaseUrl+earing2?.itemImg}").into(iv_earing2)
-        Glide.with(this).load("${imgBaseUrl+ring1?.itemImg}").into(iv_ring1)
-        Glide.with(this).load("${imgBaseUrl+ring2?.itemImg}").into(iv_ring2)
-        Glide.with(this).load("${imgBaseUrl+stone?.itemImg}").into(iv_stone)
+        rv_leftEquipImg.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        rv_rightEquipImg.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        rv_leftEquipImg.adapter = EquipImgAdapter(leftList, imgBaseUrl, this, "left")
+        rv_rightEquipImg.adapter = EquipImgAdapter(rightList, imgBaseUrl, this, "right")
     }
 
     companion object {
