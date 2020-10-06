@@ -5,5 +5,8 @@ class UserInfo(
     var expeditionLv : String? = null,
     var Lv : String? = null,
     var itemLv : String? = null,
-    var reachItemLv : String? = null
+    var reachItemLv : String? = null,
+    var classLogoImg : String? = null,
+    var className : String? = null,
+    var classImg : String? = null
 ) {}

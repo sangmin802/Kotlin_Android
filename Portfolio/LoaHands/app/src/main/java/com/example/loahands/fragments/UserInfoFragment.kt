@@ -16,10 +16,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.loahands.R
 import com.example.loahands.ScopeManager
+import com.example.loahands.adapters.EquipDetailAdapter
 import com.example.loahands.adapters.EquipImgAdapter
-import com.example.loahands.model.SendingData
+import com.example.loahands.model.*
 import com.example.loahands.model.UserEquip
-import com.example.loahands.model.UserEquipDetail
 import kotlinx.android.synthetic.main.fragment_user_info.*
 import kotlinx.coroutines.*
 import org.json.JSONObject
@@ -46,11 +46,24 @@ class UserInfoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val imgBaseUrl = "http://cdn-lostark.game.onstove.com/"
         val _userEquip = userData?.userEquip
+        val _userInfo = userData?.userInfo
 
-        setItemImg(imgBaseUrl, _userEquip)
+        setEquip(imgBaseUrl, _userEquip)
+        setUserInfo(imgBaseUrl, _userInfo)
     }
 
-    fun setItemImg(imgBaseUrl : String, _userEquip : UserEquip?){
+    fun setUserInfo(imgBaseUrl : String, _userInfo : UserInfo?){
+        tv_expeditionLv.text = _userInfo?.expeditionLv
+        tv_charLv.text = _userInfo?.Lv
+        tv_className.text = _userInfo?.className
+        tv_itemLv.text = _userInfo?.itemLv
+        tv_totalItemLv.text = _userInfo?.reachItemLv
+        tv_userName.text = _userInfo?.userName
+        Glide.with(this).load("${"http:"+_userInfo?.classLogoImg}").into(iv_classLogo)
+        Glide.with(this).load("${"http:"+_userInfo?.classImg}").into(iv_classImg)
+    }
+
+    fun setEquip(imgBaseUrl : String, _userEquip : UserEquip?){
         val head = _userEquip?.head
         val shoulder = _userEquip?.shoulder
         val cloth = _userEquip?.cloth
@@ -66,13 +79,14 @@ class UserInfoFragment : Fragment() {
         var blank = _userEquip?.blank
         val leftList = arrayListOf(head, shoulder, cloth, pants, glove, weapon)
         val rightList = arrayListOf(necklace, earing1, earing2, ring1, ring2, stone, blank)
+        val detailList = arrayListOf(weapon, head, shoulder, cloth, pants, glove, necklace, earing1, earing2, ring1, ring2, stone)
 
-//        div_userEquipWrap.setBackgroundResource(resources.getIdentifier("bg_profile_equipment", "drawable", activity?.packageName))
-
-        rv_leftEquipImg.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        rv_rightEquipImg.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        rv_leftEquipImg.layoutManager = CustomLinearLayoutManager(context)
+        rv_rightEquipImg.layoutManager = CustomLinearLayoutManager(context)
+        rv_userEquipDetail.layoutManager = CustomLinearLayoutManager(context)
         rv_leftEquipImg.adapter = EquipImgAdapter(leftList, imgBaseUrl, this, "left")
         rv_rightEquipImg.adapter = EquipImgAdapter(rightList, imgBaseUrl, this, "right")
+        rv_userEquipDetail.adapter = EquipDetailAdapter(detailList, imgBaseUrl, this)
     }
 
     companion object {

@@ -72,12 +72,19 @@ class ScopeManager {
         val Lv = httpResult.getElementsByClass("level-info__item").text()
         val itemLv = httpResult.getElementsByClass("level-info2__expedition").text()
         val reachItemLv = httpResult.getElementsByClass("level-info2__item").text()
+        val classInfo = httpResult.getElementsByClass("profile-character-info__img")
+        val className = classInfo.attr("alt")
+        val classLogoImg = classInfo.attr("src")
+        val classImg = httpResult.getElementsByClass("profile-equipment__character")[0].children().attr("src")
         var userInfoClass = UserInfo().apply {
             this.userName = userName
             this.expeditionLv = expeditionLv
             this.Lv = Lv
             this.itemLv = itemLv
             this.reachItemLv = reachItemLv
+            this.className = className
+            this.classLogoImg = classLogoImg
+            this.classImg = classImg
         }
         return userInfoClass
     }
