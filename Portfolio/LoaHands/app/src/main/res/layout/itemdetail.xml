@@ -53,7 +53,6 @@
             android:id="@+id/tv_equipDetailParts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="장비부위"
             android:textColor="#ffffff"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -62,7 +61,6 @@
             android:id="@+id/tv_eqipDetailName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="장비이름"
             android:textColor="#ffffff"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.loahands.EquipDialog
 import com.example.loahands.R
 import com.example.loahands.model.UserEquipDetail
 
@@ -20,7 +21,16 @@ class EquipDetailAdapter(val equipList : ArrayList<UserEquipDetail?>, val imgBas
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EquipDetailAdapter.CustomViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.itemdetail, parent, false)
 
-        return CustomViewHolder(view, parent)
+        return CustomViewHolder(view, parent).apply {
+            this._view.setOnClickListener {
+                val curPos : Int = adapterPosition
+                val equipData : UserEquipDetail? = equipList.get(curPos)
+                if(equipData!==null){
+                    val dlg = EquipDialog(parent.context)
+                    dlg.start(equipData, imgBaseUrl, frag)
+                }
+            }
+        }
     }
 
     override fun getItemCount(): Int {
@@ -29,9 +39,9 @@ class EquipDetailAdapter(val equipList : ArrayList<UserEquipDetail?>, val imgBas
 
     override fun onBindViewHolder(holder: EquipDetailAdapter.CustomViewHolder, position: Int) {
         val target = holder._parent
-        holder.equipDetailType.setImageResource(frag.resources.getIdentifier("${imgPos+0+imgCount}", "drawable", frag.activity?.packageName))
+        holder.equipDetailType.setImageResource(frag.resources.getIdentifier(imgPos+0+imgCount, "drawable", frag.activity?.packageName))
         if(equipList.get(position) != null){
-            Glide.with(target).load("${imgBaseUrl+equipList.get(position)?.itemImg}").into(holder.equipImg)
+            Glide.with(target).load(imgBaseUrl+equipList.get(position)?.itemImg).into(holder.equipImg)
             holder.equipName.text = equipList.get(position)?.itemName
             holder.equipParts.text = equipList.get(position)?.itemParts
             holder.equipImg.background = frag.resources.getDrawable(frag.resources.getIdentifier("gradient${equipList.get(position)?.itemGrade}", "drawable", frag.activity?.packageName), null)
@@ -45,7 +55,7 @@ class EquipDetailAdapter(val equipList : ArrayList<UserEquipDetail?>, val imgBas
         }
     }
 
-    class CustomViewHolder(_view : View, val _parent : ViewGroup) : RecyclerView.ViewHolder(_view) {
+    class CustomViewHolder(val _view : View, val _parent : ViewGroup) : RecyclerView.ViewHolder(_view) {
         val equipDetailType = _view.findViewById<ImageView>(R.id.iv_equipDetailType)
         val equipImg = _view.findViewById<ImageView>(R.id.iv_equipDetailImg)
         val equipParts = _view.findViewById<TextView>(R.id.tv_equipDetailParts)
